@@ -60,7 +60,20 @@ class MyWindow(QMainWindow):
 
         # Update the table with the current orders
         self.update_table()
+    def update_table(self):
+            # Clear the existing rows from the table
+            self.table.setRowCount(0)
 
+            # Get all the orders from the database
+            orders = self.conn.execute('SELECT * FROM orders')
+
+            # Add each order to the table
+            for order in orders:
+                row = self.table.rowCount()
+                self.table.insertRow(row)
+                for i in range(7):
+                    item = QTableWidgetItem(str(order[i]))
+                    self.table.setItem(row, i, item)
     def add_order(self):
         # Get the values from the line edits and combo box
         siparis_no = int(self.siparis_no_edit.text())
